@@ -1,4 +1,9 @@
+import { Server } from "./presentation/server";
 
-const message: String = 'Inicio de la app!';
+(async() => {
+    main();
+})();
 
-console.log(message);
+function main() {
+    Server.start();
+}
