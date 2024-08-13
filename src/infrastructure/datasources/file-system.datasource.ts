@@ -20,7 +20,7 @@ export class FileSystemDatasource implements LogDatasource {
         }
 
         [
-            this.logPath,
+            this.lowLogPath,
             this.mediumLogPath,
             this.highLogPath
         ].forEach( path => {
