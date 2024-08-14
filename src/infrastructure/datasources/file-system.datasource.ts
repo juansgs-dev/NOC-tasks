@@ -53,16 +53,16 @@ export class FileSystemDatasource implements LogDatasource {
         switch (severitylevel) {
             case LogSeverityLevel.low:
                 
-                break;
+                return[];
             case LogSeverityLevel.medium:
                 
-                break;
+                return[];
             case LogSeverityLevel.high:
                 
-                break;
+                return[];
         
             default:
-                break;
+                throw new Error(`${severitylevel} not implemented`);
         }
     }
 
