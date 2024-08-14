@@ -49,8 +49,21 @@ export class FileSystemDatasource implements LogDatasource {
         
     }
 
-    getLogs(severitylevel: LogSeverityLevel): Promise<LogEntity[]> {
-        throw new Error('method no implement');
+    async getLogs(severitylevel: LogSeverityLevel): Promise<LogEntity[]> {
+        switch (severitylevel) {
+            case LogSeverityLevel.low:
+                
+                break;
+            case LogSeverityLevel.medium:
+                
+                break;
+            case LogSeverityLevel.high:
+                
+                break;
+        
+            default:
+                break;
+        }
     }
 
 }
