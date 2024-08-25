@@ -3,10 +3,15 @@ import { envs } from '../../config/plugin/envs.plugin';
 
 
 interface SendMailOptions {
-    to: string,
+    to: string | string [],
     subject: string,
     htmlBody: string,
-    //todo: attachements:
+    attachments?: Attachment[];
+}
+
+interface Attachment {
+    filename: string;
+    path: string;
 }
 
 export class EmailService {
@@ -19,23 +24,49 @@ export class EmailService {
         }
     });
 
-    async sendEmail(options: SendMailOptions): Promise<boolean> {
+    constructor() {}
 
-        const { to, subject, htmlBody } = options;
+    
+  async sendEmail( options: SendMailOptions ): Promise<boolean> {
 
-        try {
-            const sendInformation = await this.transporter.sendMail({
-                to,
-                subject,
-                html: htmlBody
-            });
+    const { to, subject, htmlBody, attachments = [] } = options;
 
-            console.log(sendInformation);
 
-            return true;
-        } catch (error) {
-            return false;
-        }
+    try {
 
+      const sentInformation = await this.transporter.sendMail( {
+        to: to,
+        subject: subject,
+        html: htmlBody,
+        attachments: attachments,
+      });
+
+
+      return true;
+    } catch ( error ) {
+      return false;
     }
+
+  }
+
+  async sendEmailWithFileSystemLogs( to: string | string[] ) {
+    const subject = 'Logs del servidor';
+    const htmlBody = `
+    <h3>Logs de sistema - NOC</h3>
+    <p>Lorem velit non veniam ullamco ex eu laborum deserunt est amet elit nostrud sit. Dolore ullamco duis in ut deserunt. Ad pariatur labore exercitation adipisicing excepteur elit anim eu consectetur excepteur est dolor qui. Voluptate consectetur proident ex fugiat reprehenderit exercitation laboris amet Lorem ullamco sit. Id aute ad do laborum officia labore proident laborum. Amet sit aliqua esse anim fugiat ut eu excepteur veniam incididunt occaecat sit irure aliquip. Laborum esse cupidatat adipisicing non et cupidatat ut esse voluptate aute aliqua pariatur.</p>
+    <p>Ver logs adjuntos</p>
+    `;
+
+    const attachments:Attachment[] = [
+      { filename: 'logs-all.log', path: './logs/logs-all.log' },
+      { filename: 'logs-high.log', path: './logs/logs-high.log' },
+      { filename: 'logs-medium.log', path: './logs/logs-medium.log' },
+    ];
+
+    return this.sendEmail({
+      to, subject, attachments, htmlBody
+    });
+
+  }
+
 }
