@@ -1,4 +1,3 @@
-import { envs } from "./config/plugin/envs.plugin";
 import { Server } from "./presentation/server";
 
 (async() => {
@@ -7,5 +6,4 @@ import { Server } from "./presentation/server";
 
 function main() {
     Server.start();
-    // console.log( envs.MAILER_EMAIL )
 }
