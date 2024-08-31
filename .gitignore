@@ -3,7 +3,4 @@ dist/
 logs/
 mongo/
 
-
 .env
-
-package-lock.json
